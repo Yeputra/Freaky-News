@@ -5,6 +5,7 @@ import android.os.Bundle
 import id.freaky.newsapp.Fragment.PagerAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
+
 class MainActivity : AppCompatActivity() {
 
 
@@ -15,5 +16,7 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.elevation=0F
         viewpager_main.adapter = PagerAdapter(supportFragmentManager)
         tabs_main.setupWithViewPager(viewpager_main)
+
     }
+
 }

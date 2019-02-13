@@ -1,0 +1,39 @@
+package id.freaky.newsapp.adapter
+
+import android.content.Context
+import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import com.bumptech.glide.Glide
+import id.freaky.newsapp.R
+import id.freaky.newsapp.model.ArticlesItem
+import kotlinx.android.synthetic.main.news_list_item.view.*
+
+class NewsAdapter(var context: Context?, var list: List<ArticlesItem>) : RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+        holder.tvTitle.text = list.get(position).title
+        holder.tvAuthor.text = list.get(position).author
+
+        context?.let { Glide.with(it).load(list.get(position).urlToImage).into(holder.ivImage) }
+        holder.itemView.setOnClickListener {
+        }
+    }
+
+    override fun onCreateViewHolder(p0: ViewGroup, viewType: Int): ViewHolder {
+        var v = LayoutInflater.from(context).inflate(R.layout.news_list_item, p0, false)
+        return ViewHolder(v)
+    }
+
+    override fun getItemCount(): Int {
+        return list.size
+    }
+
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val tvTitle = itemView.tv_title
+        val tvAuthor = itemView.tv_author
+        val ivImage = itemView.iv_image
+    }
+}
