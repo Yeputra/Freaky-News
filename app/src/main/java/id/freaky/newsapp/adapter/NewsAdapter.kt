@@ -6,9 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
-import id.freaky.newsapp.R
 import id.freaky.newsapp.model.ArticlesItem
 import kotlinx.android.synthetic.main.news_list_item.view.*
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
+import android.R
+import com.bumptech.glide.Priority
+
 
 class NewsAdapter(var context: Context?, var list: List<ArticlesItem>) : RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
 
@@ -17,13 +21,21 @@ class NewsAdapter(var context: Context?, var list: List<ArticlesItem>) : Recycle
         holder.tvTitle.text = list.get(position).title
         holder.tvAuthor.text = list.get(position).author
 
-        context?.let { Glide.with(it).load(list.get(position).urlToImage).into(holder.ivImage) }
+        val options = RequestOptions()
+            .centerCrop()
+            .placeholder(id.freaky.newsapp.R.drawable.placeholder)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .priority(Priority.HIGH)
+            .dontAnimate()
+            .dontTransform()
+
+        context?.let { Glide.with(it).setDefaultRequestOptions(options).load(list.get(position).urlToImage).into(holder.ivImage)}
         holder.itemView.setOnClickListener {
         }
     }
 
     override fun onCreateViewHolder(p0: ViewGroup, viewType: Int): ViewHolder {
-        var v = LayoutInflater.from(context).inflate(R.layout.news_list_item, p0, false)
+        var v = LayoutInflater.from(context).inflate(id.freaky.newsapp.R.layout.news_list_item, p0, false)
         return ViewHolder(v)
     }
 
