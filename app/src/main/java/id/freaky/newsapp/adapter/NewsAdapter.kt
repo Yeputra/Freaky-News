@@ -10,7 +10,6 @@ import id.freaky.newsapp.model.ArticlesItem
 import kotlinx.android.synthetic.main.news_list_item.view.*
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
-import android.R
 import com.bumptech.glide.Priority
 
 

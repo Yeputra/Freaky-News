@@ -63,9 +63,7 @@ class HomeFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<News>?, t: Throwable?) {
-
             }
-
         })
 
     }
