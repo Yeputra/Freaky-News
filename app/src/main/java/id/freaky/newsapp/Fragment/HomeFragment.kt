@@ -12,6 +12,7 @@ import android.widget.ProgressBar
 
 import id.freaky.newsapp.API.APIClient
 import id.freaky.newsapp.API.APIInterface
+import id.freaky.newsapp.BuildConfig
 import id.freaky.newsapp.adapter.NewsAdapter
 import id.freaky.newsapp.R
 import id.freaky.newsapp.model.ArticlesItem
@@ -23,7 +24,7 @@ import retrofit2.Response
 class HomeFragment : Fragment() {
     companion object {
 
-        val api_key: String = "8faf76d5ea57418ab71a1463752e358a"
+        val api_key: String = BuildConfig.api_key
         val country: String = "id"
         lateinit var Adapter: NewsAdapter
         lateinit var rvHome:RecyclerView
