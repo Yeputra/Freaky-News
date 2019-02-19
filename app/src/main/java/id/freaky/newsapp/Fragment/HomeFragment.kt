@@ -3,6 +3,7 @@ package id.freaky.newsapp.Fragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -19,6 +20,7 @@ import id.freaky.newsapp.R
 import id.freaky.newsapp.adapter.NewsAdapterHorizontal
 import id.freaky.newsapp.model.ArticlesItem
 import id.freaky.newsapp.model.News
+import kotlinx.android.synthetic.main.fragment_home.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -35,7 +37,8 @@ class HomeFragment : Fragment() {
         lateinit var AdapterHorizontal: NewsAdapterHorizontal
         lateinit var rvHome:RecyclerView
         lateinit var rvHomeHorizontal:RecyclerView
-        lateinit var pb:ProgressBar
+        lateinit var prB:ProgressBar
+        lateinit var sw:SwipeRefreshLayout
 
     }
 
@@ -46,7 +49,8 @@ class HomeFragment : Fragment() {
         rvHome = rootView.findViewById(R.id.rv_home)
         tvFeatured = rootView.findViewById(R.id.tv_featured_home)
         tvPopular = rootView.findViewById(R.id.tv_popular_home)
-        pb = rootView.findViewById(R.id.pb)
+        prB = rootView.findViewById(R.id.pb)
+        sw = rootView.findViewById(R.id.swipe)
 
         rvHomeHorizontal.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         rvHomeHorizontal.setHasFixedSize(true)
@@ -57,6 +61,10 @@ class HomeFragment : Fragment() {
         viewsHide(rvHome, rvHomeHorizontal)
         retrieveNews(rvHome, rvHomeHorizontal)
 
+        sw.setOnRefreshListener {
+            retrieveNews(rvHome, rvHomeHorizontal)
+        }
+
         return rootView
 
     }
@@ -66,11 +74,14 @@ class HomeFragment : Fragment() {
         rvHomeHorizontal.visibility = View.INVISIBLE
         tvFeatured.visibility = View.INVISIBLE
         tvPopular.visibility = View.INVISIBLE
-        pb.visibility = View.VISIBLE
+        prB.visibility = View.VISIBLE
+    }
+
+    fun onItemsLoadComplete() {
+        sw.isRefreshing = false
     }
 
     fun retrieveNews(rvHome: RecyclerView, rvHomeHorizontal: RecyclerView) {
-
 
         var apiServices =APIClient.client.create(APIInterface::class.java)
 
@@ -88,7 +99,9 @@ class HomeFragment : Fragment() {
                 rvHome.visibility = View.VISIBLE
                 tvFeatured.visibility = View.VISIBLE
                 tvPopular.visibility = View.VISIBLE
-                pb.visibility = View.INVISIBLE
+                prB.visibility = View.INVISIBLE
+
+                onItemsLoadComplete()
 
             }
 
@@ -106,7 +119,7 @@ class HomeFragment : Fragment() {
                 rvHomeHorizontal.visibility = View.VISIBLE
                 tvFeatured.visibility = View.VISIBLE
                 tvPopular.visibility = View.VISIBLE
-                pb.visibility = View.INVISIBLE
+                prB.visibility = View.INVISIBLE
 
             }
 
