@@ -21,7 +21,7 @@ class NewsAdapter(var context: Context?, var list: List<ArticlesItem>) : Recycle
         holder.tvAuthor.text = list.get(position).author
 
         val options = RequestOptions()
-            .centerCrop()
+            .fitCenter()
             .placeholder(id.freaky.newsapp.R.drawable.placeholder)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .priority(Priority.HIGH)

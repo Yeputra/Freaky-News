@@ -18,8 +18,15 @@ class NewsAdapterHorizontal (var context: Context?, var list: List<ArticlesItem>
 
         holder.tvTitle.text = list.get(position).title
 
+        if(list.get(position).author != null || list.get(position).author != ""){
+            holder.tvAuthor.text = list.get(position).author
+        }
+        else {
+            holder.tvAuthor.text = " - "
+        }
+
         val options = RequestOptions()
-            .centerCrop()
+            .fitCenter()
             .placeholder(id.freaky.newsapp.R.drawable.placeholder)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .priority(Priority.HIGH)
@@ -37,11 +44,12 @@ class NewsAdapterHorizontal (var context: Context?, var list: List<ArticlesItem>
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return 5
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvTitle = itemView.tv_title_horizontal
         val ivImage = itemView.iv_news_horizontal
+        val tvAuthor = itemView.tv_author_horizontal
     }
 }

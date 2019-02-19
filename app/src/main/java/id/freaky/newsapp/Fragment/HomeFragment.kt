@@ -28,6 +28,7 @@ class HomeFragment : Fragment() {
 
         val api_key: String = BuildConfig.api_key
         val country: String = "id"
+        val category: String = "Technology"
         lateinit var tvFeatured: TextView
         lateinit var tvPopular: TextView
         lateinit var Adapter: NewsAdapter
@@ -73,20 +74,36 @@ class HomeFragment : Fragment() {
 
         var apiServices =APIClient.client.create(APIInterface::class.java)
 
-        val call = apiServices.getHeadlines(country, api_key)
+        val call = apiServices.getPopular(country, api_key)
+
+        val call2 = apiServices.getFeatured(country, category, api_key)
 
         call.enqueue(object : Callback<News> {
             override fun onResponse(call: Call<News>, response: Response<News>) {
                 var listOfNews: List<ArticlesItem> = response.body()?.articles!!
 
-                AdapterHorizontal = NewsAdapterHorizontal(activity, listOfNews)
-                rvHomeHorizontal.setAdapter(AdapterHorizontal)
-
                 Adapter = NewsAdapter(activity, listOfNews)
                 rvHome.setAdapter(Adapter)
 
-                rvHomeHorizontal.visibility = View.VISIBLE
                 rvHome.visibility = View.VISIBLE
+                tvFeatured.visibility = View.VISIBLE
+                tvPopular.visibility = View.VISIBLE
+                pb.visibility = View.INVISIBLE
+
+            }
+
+            override fun onFailure(call: Call<News>?, t: Throwable?) {
+            }
+        })
+
+        call2.enqueue(object : Callback<News> {
+            override fun onResponse(call2: Call<News>, response: Response<News>) {
+                var listOfNews: List<ArticlesItem> = response.body()?.articles!!
+
+                AdapterHorizontal = NewsAdapterHorizontal(activity, listOfNews)
+                rvHomeHorizontal.setAdapter(AdapterHorizontal)
+
+                rvHomeHorizontal.visibility = View.VISIBLE
                 tvFeatured.visibility = View.VISIBLE
                 tvPopular.visibility = View.VISIBLE
                 pb.visibility = View.INVISIBLE
