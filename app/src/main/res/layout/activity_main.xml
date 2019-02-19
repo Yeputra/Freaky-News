@@ -28,8 +28,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
-            android:fontFamily="sans-serif-condensed-light"
+            android:fontFamily="@font/raleway_semibold"
             app:tabMode="scrollable"
+            app:tabTextAppearance="@style/CustomViewAllTab"
             app:tabPaddingTop="16dp"
             android:background="@android:color/white"/>
 
