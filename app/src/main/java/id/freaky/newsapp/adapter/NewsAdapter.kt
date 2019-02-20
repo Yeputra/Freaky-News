@@ -11,6 +11,8 @@ import kotlinx.android.synthetic.main.news_list_item.view.*
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.Priority
+import id.freaky.newsapp.activity.DetailActivity
+import org.jetbrains.anko.startActivity
 
 
 class NewsAdapter(var context: Context?, var list: List<ArticlesItem>) : RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
@@ -29,7 +31,47 @@ class NewsAdapter(var context: Context?, var list: List<ArticlesItem>) : Recycle
             .dontTransform()
 
         context?.let { Glide.with(it).setDefaultRequestOptions(options).load(list.get(position).urlToImage).into(holder.ivImage)}
+
         holder.itemView.setOnClickListener {
+            val item = list[position]
+            var image: String
+            var title: String
+            var author: String
+            var content: String
+
+            if (item.urlToImage != null){
+                image = item.urlToImage
+            }
+            else{
+                image = "null"
+            }
+
+            if (item.title != null){
+                title = item.title
+            }
+            else{
+                title = "No Title"
+            }
+
+            if (item.author != null){
+                author = item.author
+            }
+            else{
+                author = "No Author"
+            }
+
+            if (item.content != null){
+                content = item.content
+            }
+            else{
+                content = "No Content"
+            }
+
+            context?.startActivity<DetailActivity>("image" to image,
+                "title" to title,
+                "author" to author,
+                "content" to content)
+
         }
     }
 

@@ -9,8 +9,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import id.freaky.newsapp.activity.DetailActivity
 import id.freaky.newsapp.model.ArticlesItem
 import kotlinx.android.synthetic.main.news_list_horizontal_item.view.*
+import org.jetbrains.anko.startActivity
 
 class NewsAdapterHorizontal (var context: Context?, var list: List<ArticlesItem>) : RecyclerView.Adapter<NewsAdapterHorizontal.ViewHolder>() {
 
@@ -18,7 +20,7 @@ class NewsAdapterHorizontal (var context: Context?, var list: List<ArticlesItem>
 
         holder.tvTitle.text = list.get(position).title
 
-        if(list.get(position).author != null || list.get(position).author != ""){
+        if(list.get(position).author != null){
             holder.tvAuthor.text = list.get(position).author
         }
         else {
@@ -34,8 +36,49 @@ class NewsAdapterHorizontal (var context: Context?, var list: List<ArticlesItem>
             .dontTransform()
 
         context?.let { Glide.with(it).setDefaultRequestOptions(options).load(list.get(position).urlToImage).into(holder.ivImage)}
+
         holder.itemView.setOnClickListener {
+            val item = list[position]
+            var image: String
+            var title: String
+            var author: String
+            var content: String
+
+            if (item.urlToImage != null){
+                image = item.urlToImage
+            }
+            else{
+                image = "null"
+            }
+
+            if (item.title != null){
+                title = item.title
+            }
+            else{
+                title = "No Title"
+            }
+
+            if (item.author != null){
+                author = item.author
+            }
+            else{
+                author = "No Author"
+            }
+
+            if (item.content != null){
+                content = item.content
+            }
+            else{
+                content = "No Content"
+            }
+
+            context?.startActivity<DetailActivity>("image" to image,
+                                                         "title" to title,
+                                                         "author" to author,
+                                                         "content" to content)
+
         }
+
     }
 
     override fun onCreateViewHolder(p0: ViewGroup, viewType: Int): ViewHolder {
