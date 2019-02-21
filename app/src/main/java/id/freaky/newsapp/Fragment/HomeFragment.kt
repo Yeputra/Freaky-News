@@ -20,7 +20,6 @@ import id.freaky.newsapp.R
 import id.freaky.newsapp.adapter.NewsAdapterHorizontal
 import id.freaky.newsapp.model.ArticlesItem
 import id.freaky.newsapp.model.News
-import kotlinx.android.synthetic.main.fragment_home.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -30,7 +29,7 @@ class HomeFragment : Fragment() {
 
         val api_key: String = BuildConfig.api_key
         val country: String = "id"
-        val category: String = "Technology"
+        val category: String = "Business"
         lateinit var tvFeatured: TextView
         lateinit var tvPopular: TextView
         lateinit var Adapter: NewsAdapter
@@ -85,12 +84,30 @@ class HomeFragment : Fragment() {
 
         var apiServices =APIClient.client.create(APIInterface::class.java)
 
-        val call = apiServices.getPopular(country, api_key)
+        val callFeatured = apiServices.getFeatured(country, api_key)
 
-        val call2 = apiServices.getFeatured(country, category, api_key)
+        val callForYou = apiServices.getForYou(country, category, api_key)
 
-        call.enqueue(object : Callback<News> {
-            override fun onResponse(call: Call<News>, response: Response<News>) {
+        callFeatured.enqueue(object : Callback<News> {
+            override fun onResponse(callFeatured: Call<News>, response: Response<News>) {
+                var listOfNews: List<ArticlesItem> = response.body()?.articles!!
+
+                AdapterHorizontal = NewsAdapterHorizontal(activity, listOfNews)
+                rvHomeHorizontal.setAdapter(AdapterHorizontal)
+
+                rvHomeHorizontal.visibility = View.VISIBLE
+                tvFeatured.visibility = View.VISIBLE
+                tvPopular.visibility = View.VISIBLE
+                prB.visibility = View.INVISIBLE
+
+            }
+
+            override fun onFailure(call: Call<News>?, t: Throwable?) {
+            }
+        })
+
+        callForYou.enqueue(object : Callback<News> {
+            override fun onResponse(callForYou: Call<News>, response: Response<News>) {
                 var listOfNews: List<ArticlesItem> = response.body()?.articles!!
 
                 Adapter = NewsAdapter(activity, listOfNews)
@@ -102,24 +119,6 @@ class HomeFragment : Fragment() {
                 prB.visibility = View.INVISIBLE
 
                 onItemsLoadComplete()
-
-            }
-
-            override fun onFailure(call: Call<News>?, t: Throwable?) {
-            }
-        })
-
-        call2.enqueue(object : Callback<News> {
-            override fun onResponse(call2: Call<News>, response: Response<News>) {
-                var listOfNews: List<ArticlesItem> = response.body()?.articles!!
-
-                AdapterHorizontal = NewsAdapterHorizontal(activity, listOfNews)
-                rvHomeHorizontal.setAdapter(AdapterHorizontal)
-
-                rvHomeHorizontal.visibility = View.VISIBLE
-                tvFeatured.visibility = View.VISIBLE
-                tvPopular.visibility = View.VISIBLE
-                prB.visibility = View.INVISIBLE
 
             }
 

@@ -6,16 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
-import id.freaky.newsapp.model.ArticlesItem
-import kotlinx.android.synthetic.main.news_list_item.view.*
+import com.bumptech.glide.Priority
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.Priority
 import id.freaky.newsapp.activity.DetailActivity
+import id.freaky.newsapp.model.ArticlesItem
+import kotlinx.android.synthetic.main.news_list_item.view.*
 import org.jetbrains.anko.startActivity
 
-
-class NewsAdapter(var context: Context?, var list: List<ArticlesItem>) : RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
+class HealthAdapter (var context: Context?, var list: List<ArticlesItem>) : RecyclerView.Adapter<HealthAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
