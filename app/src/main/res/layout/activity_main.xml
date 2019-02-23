@@ -16,10 +16,8 @@
             android:background="@color/colorPrimary"
             android:layout_width="match_parent"
             app:titleTextColor="@android:color/black"
-            app:title="News"
-            android:fontFamily="sans-serif-condensed-light"
+            app:title="Freaky News"
             android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
     </android.support.v7.widget.Toolbar>
