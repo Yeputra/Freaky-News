@@ -2,12 +2,10 @@ package id.freaky.newsapp.Fragment
 
 
 import android.os.Bundle
-import android.support.design.widget.CollapsingToolbarLayout
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,14 +20,14 @@ import org.jetbrains.anko.support.v4.find
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import id.freaky.newsapp.adapter.HealthAdapter
+import id.freaky.newsapp.adapter.OtherAdapter
 
 class HealthFragment : Fragment() {
 
     val api_key: String = BuildConfig.api_key
     val country: String = "id"
     val category: String = "Health"
-    lateinit var adapter: HealthAdapter
+    lateinit var adapter: OtherAdapter
     lateinit var rvHealth: RecyclerView
     lateinit var pb: ProgressBar
     lateinit var sw: SwipeRefreshLayout
@@ -65,7 +63,6 @@ class HealthFragment : Fragment() {
 
     fun viewsHide(){
         rvHealth.visibility = View.INVISIBLE
-        rvHealth.visibility = View.INVISIBLE
         pb.visibility = View.VISIBLE
     }
 
@@ -79,7 +76,7 @@ class HealthFragment : Fragment() {
             override fun onResponse(callHealth: Call<News>, response: Response<News>) {
                 var listOfNews: List<ArticlesItem> = response.body()?.articles!!
 
-                adapter = HealthAdapter(activity, listOfNews)
+                adapter = OtherAdapter(activity, listOfNews)
                 rvHealth.setAdapter(adapter)
 
                 rvHealth.visibility = View.VISIBLE

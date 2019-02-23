@@ -16,7 +16,7 @@ interface APIInterface {
     fun getHealth(@Query("country") country: String, @Query("category") category: String, @Query("apiKey") apiKey: String): Call<News>
 
     @GET("top-headlines")
-    fun getTech(@Query("country") country: String, @Query("category") category: String, @Query("apiKey") apiKey: String): Call<News>
+    fun getTechnology(@Query("country") country: String, @Query("category") category: String, @Query("apiKey") apiKey: String): Call<News>
 
     @GET("top-headlines")
     fun getEntertainment(@Query("country") country: String, @Query("category") category: String, @Query("apiKey") apiKey: String): Call<News>

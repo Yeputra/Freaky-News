@@ -14,7 +14,7 @@ import id.freaky.newsapp.model.ArticlesItem
 import kotlinx.android.synthetic.main.news_list_item.view.*
 import org.jetbrains.anko.startActivity
 
-class HealthAdapter (var context: Context?, var list: List<ArticlesItem>) : RecyclerView.Adapter<HealthAdapter.ViewHolder>() {
+class OtherAdapter (var context: Context?, var list: List<ArticlesItem>) : RecyclerView.Adapter<OtherAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
