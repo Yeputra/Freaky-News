@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/activity_main"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/main_coordinator"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
@@ -12,7 +12,6 @@
             android:layout_width="match_parent"
             android:layout_height="256dp"
             android:fitsSystemWindows="true">
-
         <android.support.design.widget.CollapsingToolbarLayout
                 android:id="@+id/collapsing_toolbar"
                 android:layout_width="match_parent"
@@ -35,23 +34,31 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
+    <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/sw_entertainment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <RelativeLayout
+        <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="16dp">
+                android:layout_height="match_parent">
 
             <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_health"
+                    android:id="@+id/rv_entertainment"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/news_list_item" >
 
             </android.support.v7.widget.RecyclerView>
 
-        </RelativeLayout>
-    </android.support.v4.widget.NestedScrollView>
+            <ProgressBar
+                    android:id="@+id/pb_entertainment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+        </FrameLayout>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 </android.support.design.widget.CoordinatorLayout>
