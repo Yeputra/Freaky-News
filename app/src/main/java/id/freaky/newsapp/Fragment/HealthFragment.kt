@@ -35,6 +35,7 @@ class HealthFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+
         rvHealth = find(R.id.rv_health)
         pb = find(R.id.pb)
         sw = find(R.id.sw_health)

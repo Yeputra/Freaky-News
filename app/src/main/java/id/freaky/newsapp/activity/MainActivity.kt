@@ -23,6 +23,8 @@ class MainActivity : AppCompatActivity() {
         viewpager_main.adapter = PagerAdapter(supportFragmentManager)
         tabs_main.setupWithViewPager(viewpager_main)
 
+        viewpager_main.offscreenPageLimit = 4
+
     }
 
 }
