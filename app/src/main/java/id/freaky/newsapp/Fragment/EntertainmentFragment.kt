@@ -10,23 +10,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import id.freaky.newsapp.BuildConfig
-import id.freaky.newsapp.API.APIClient
-import id.freaky.newsapp.API.APIInterface
+import id.freaky.newsapp.Presenter.EntertainmentPresenter
 import id.freaky.newsapp.R
+import id.freaky.newsapp.View.EntertainmentView
 import id.freaky.newsapp.adapter.OtherAdapter
 import id.freaky.newsapp.model.ArticlesItem
-import id.freaky.newsapp.model.News
 import org.jetbrains.anko.support.v4.find
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
-class EntertainmentFragment : Fragment() {
+class EntertainmentFragment : Fragment(), EntertainmentView {
 
-    val api_key: String = BuildConfig.api_key
-    val country: String = "id"
-    val category: String = "Entertainment"
+    lateinit var presenter: EntertainmentPresenter
     lateinit var adapter: OtherAdapter
     lateinit var rvEntertainment: RecyclerView
     lateinit var pbEntertainment: ProgressBar
@@ -38,13 +31,15 @@ class EntertainmentFragment : Fragment() {
         pbEntertainment = find(R.id.pb_entertainment)
         swEntertainment = find(R.id.sw_entertainment)
 
+        presenter = EntertainmentPresenter(this)
+
         rvEntertainment.layoutManager = LinearLayoutManager(activity)
         rvEntertainment.setHasFixedSize(true)
 
         hideViews()
-        retrieveNews()
+        presenter.retrieveNews()
         swEntertainment.setOnRefreshListener {
-            retrieveNews()
+            presenter.retrieveNews()
         }
     }
 
@@ -65,29 +60,15 @@ class EntertainmentFragment : Fragment() {
         pbEntertainment.visibility = View.VISIBLE
     }
 
-    fun retrieveNews(){
+    override fun showEntertainmentList(data: List<ArticlesItem>) {
 
-        var apiServices = APIClient.client.create(APIInterface::class.java)
+        adapter = OtherAdapter(activity, data)
+        rvEntertainment.setAdapter(adapter)
 
-        val callEntertainment = apiServices.getEntertainment(country,category,api_key)
-        callEntertainment.enqueue(object : Callback<News> {
-            override fun onResponse(callEntertainment: Call<News>, response: Response<News>) {
-                var listOfNews: List<ArticlesItem> = response.body()?.articles!!
-
-                adapter = OtherAdapter(activity, listOfNews)
-                rvEntertainment.setAdapter(adapter)
-
-                rvEntertainment.visibility = View.VISIBLE
-                pbEntertainment.visibility = View.INVISIBLE
-                onItemsLoadComplete()
-            }
-
-            override fun onFailure(call: Call<News>?, t: Throwable?) {
-
-            }
-        })
+        rvEntertainment.visibility = View.VISIBLE
+        pbEntertainment.visibility = View.INVISIBLE
+        onItemsLoadComplete()
 
     }
-
 
 }
