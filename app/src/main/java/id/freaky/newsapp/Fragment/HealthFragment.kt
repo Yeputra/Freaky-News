@@ -12,7 +12,9 @@ import android.widget.ProgressBar
 import id.freaky.newsapp.BuildConfig
 import id.freaky.newsapp.API.APIClient
 import id.freaky.newsapp.API.APIInterface
+import id.freaky.newsapp.Presenter.HealthPresenter
 import id.freaky.newsapp.R
+import id.freaky.newsapp.View.HealthView
 import id.freaky.newsapp.model.ArticlesItem
 import id.freaky.newsapp.model.News
 import org.jetbrains.anko.support.v4.find
@@ -21,11 +23,9 @@ import retrofit2.Callback
 import retrofit2.Response
 import id.freaky.newsapp.adapter.OtherAdapter
 
-class HealthFragment : Fragment() {
+class HealthFragment : Fragment(), HealthView {
 
-    val api_key: String = BuildConfig.api_key
-    val country: String = "id"
-    val category: String = "Health"
+    lateinit var presenter: HealthPresenter
     lateinit var adapter: OtherAdapter
     lateinit var rvHealth: RecyclerView
     lateinit var pb: ProgressBar
@@ -43,9 +43,10 @@ class HealthFragment : Fragment() {
         rvHealth.setHasFixedSize(true)
 
         viewsHide()
-        retrieveNews()
+        presenter = HealthPresenter(this)
+        presenter.retrieveNews()
         sw.setOnRefreshListener {
-            retrieveNews()
+            presenter.retrieveNews()
         }
     }
 
@@ -66,29 +67,13 @@ class HealthFragment : Fragment() {
         pb.visibility = View.VISIBLE
     }
 
-    fun retrieveNews() {
+    override fun showHealthList(data: List<ArticlesItem>) {
+        adapter = OtherAdapter(activity, data)
+        rvHealth.setAdapter(adapter)
 
-        var apiServices = APIClient.client.create(APIInterface::class.java)
-
-        val callHealth = apiServices.getForYou(country,category,api_key
-        )
-        callHealth.enqueue(object : Callback<News> {
-            override fun onResponse(callHealth: Call<News>, response: Response<News>) {
-                var listOfNews: List<ArticlesItem> = response.body()?.articles!!
-
-                adapter = OtherAdapter(activity, listOfNews)
-                rvHealth.setAdapter(adapter)
-
-                rvHealth.visibility = View.VISIBLE
-                pb.visibility = View.INVISIBLE
-                onItemsLoadComplete()
-            }
-
-            override fun onFailure(call: Call<News>?, t: Throwable?) {
-            }
-        })
-
+        rvHealth.visibility = View.VISIBLE
+        pb.visibility = View.INVISIBLE
+        onItemsLoadComplete()
     }
-
 
 }
