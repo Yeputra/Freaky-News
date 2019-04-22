@@ -12,9 +12,9 @@ import retrofit2.Response
 
 class TechnologyPresenter (private val view: TechnologyView) {
 
-    val api_key: String = BuildConfig.api_key
-    val country: String = "id"
-    val category: String = "Technology"
+    private val api_key: String = BuildConfig.api_key
+    private val country: String = "id"
+    private val category: String = "Technology"
 
     fun retrieveNews(){
 

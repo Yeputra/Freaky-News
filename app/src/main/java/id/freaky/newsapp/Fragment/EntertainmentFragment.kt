@@ -18,11 +18,11 @@ import org.jetbrains.anko.support.v4.find
 
 class EntertainmentFragment : Fragment(), EntertainmentView {
 
-    lateinit var presenter: EntertainmentPresenter
-    lateinit var adapter: OtherAdapter
-    lateinit var rvEntertainment: RecyclerView
-    lateinit var pbEntertainment: ProgressBar
-    lateinit var swEntertainment: SwipeRefreshLayout
+    private lateinit var presenter: EntertainmentPresenter
+    private lateinit var adapter: OtherAdapter
+    private lateinit var rvEntertainment: RecyclerView
+    private lateinit var pbEntertainment: ProgressBar
+    private lateinit var swEntertainment: SwipeRefreshLayout
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

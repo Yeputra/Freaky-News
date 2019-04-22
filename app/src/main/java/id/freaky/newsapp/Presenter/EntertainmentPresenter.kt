@@ -14,9 +14,9 @@ import retrofit2.Response
 
 class EntertainmentPresenter (private val view : EntertainmentView){
 
-    val api_key: String = BuildConfig.api_key
-    val country: String = "id"
-    val category: String = "Entertainment"
+    private val api_key: String = BuildConfig.api_key
+    private val country: String = "id"
+    private val category: String = "Entertainment"
 
     fun retrieveNews(){
 

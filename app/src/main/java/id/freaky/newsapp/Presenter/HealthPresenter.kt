@@ -12,9 +12,9 @@ import retrofit2.Response
 
 class HealthPresenter (private val view : HealthView)
 {
-    val api_key: String = BuildConfig.api_key
-    val country: String = "id"
-    val category: String = "Health"
+    private val api_key: String = BuildConfig.api_key
+    private val country: String = "id"
+    private val category: String = "Health"
 
     fun retrieveNews(){
 

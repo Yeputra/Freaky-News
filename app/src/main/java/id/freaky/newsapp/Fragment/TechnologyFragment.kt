@@ -12,7 +12,9 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import id.freaky.newsapp.API.APIClient
 import id.freaky.newsapp.API.APIInterface
+import id.freaky.newsapp.Presenter.TechnologyPresenter
 import id.freaky.newsapp.R
+import id.freaky.newsapp.View.TechnologyView
 import id.freaky.newsapp.adapter.OtherAdapter
 import id.freaky.newsapp.model.ArticlesItem
 import id.freaky.newsapp.model.News
@@ -21,15 +23,13 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class TechnologyFragment : Fragment() {
+class TechnologyFragment : Fragment(), TechnologyView {
 
-    val api_key: String = BuildConfig.api_key
-    val country: String = "id"
-    val category: String = "Technology"
-    lateinit var adapter: OtherAdapter
-    lateinit var rvTech: RecyclerView
-    lateinit var pbTech: ProgressBar
-    lateinit var swTech: SwipeRefreshLayout
+    private lateinit var presenter: TechnologyPresenter
+    private lateinit var adapter: OtherAdapter
+    private lateinit var rvTech: RecyclerView
+    private lateinit var pbTech: ProgressBar
+    private lateinit var swTech: SwipeRefreshLayout
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -41,9 +41,10 @@ class TechnologyFragment : Fragment() {
         rvTech.setHasFixedSize(true)
 
         viewsHide()
-        retrieveNews()
+        presenter = TechnologyPresenter(this)
+        presenter.retrieveNews()
         swTech.setOnRefreshListener {
-            retrieveNews()
+            presenter.retrieveNews()
         }
     }
 
@@ -64,26 +65,14 @@ class TechnologyFragment : Fragment() {
         pbTech.visibility = View.VISIBLE
     }
 
-    fun retrieveNews(){
+    override fun showTechnologyList(data: List<ArticlesItem>) {
 
-        var apiServices = APIClient.client.create(APIInterface::class.java)
+        adapter = OtherAdapter(activity, data)
+        rvTech.setAdapter(adapter)
 
-        val callTech = apiServices.getTechnology(country,category,api_key)
-
-        callTech.enqueue(object : Callback<News> {
-            override fun onResponse(callTech: Call<News>, response: Response<News>) {
-                var listOfNews: List<ArticlesItem> = response.body()?.articles!!
-
-                adapter = OtherAdapter(activity, listOfNews)
-                rvTech.setAdapter(adapter)
-
-                rvTech.visibility = View.VISIBLE
-                pbTech.visibility = View.INVISIBLE
-                onItemsLoadComplete()
-            }
-            override fun onFailure(call: Call<News>?, t: Throwable?) {
-            }
-        })
+        rvTech.visibility = View.VISIBLE
+        pbTech.visibility = View.INVISIBLE
+        onItemsLoadComplete()
 
     }
 

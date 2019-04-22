@@ -25,11 +25,11 @@ import id.freaky.newsapp.adapter.OtherAdapter
 
 class HealthFragment : Fragment(), HealthView {
 
-    lateinit var presenter: HealthPresenter
-    lateinit var adapter: OtherAdapter
-    lateinit var rvHealth: RecyclerView
-    lateinit var pb: ProgressBar
-    lateinit var sw: SwipeRefreshLayout
+    private lateinit var presenter: HealthPresenter
+    private lateinit var adapter: OtherAdapter
+    private lateinit var rvHealth: RecyclerView
+    private lateinit var pb: ProgressBar
+    private lateinit var sw: SwipeRefreshLayout
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
