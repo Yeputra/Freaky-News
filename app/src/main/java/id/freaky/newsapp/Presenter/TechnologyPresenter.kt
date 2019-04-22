@@ -11,6 +11,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class TechnologyPresenter (private val view: TechnologyView) {
+
     val api_key: String = BuildConfig.api_key
     val country: String = "id"
     val category: String = "Technology"
