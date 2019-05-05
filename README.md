@@ -25,6 +25,7 @@ This repository is a news-app using source from https://newsapi.org/ .
 * Retrofit
 * MVP Pattern
 * Collapsing toolbar
+* Swipe to Refresh
 
 ## Author
 * **Yuda Eka Putra**
